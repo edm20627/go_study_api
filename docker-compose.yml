@@ -9,25 +9,25 @@ services:
     environment:
       - TZ=Japan
     volumes:
-      - .:/go/src
+      - .:/go/src/app
     ports:
       - 8080:8080
     depends_on:
-      - pgsql
-  pgsql:
+      - postgres
+  postgres:
     build:
       context: .
-      dockerfile: ./docker/pgsql/Dockerfile
+      dockerfile: ./docker/postgres/Dockerfile
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      # POSTGRES_DB: root
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: app_db
     volumes:
-      - ./docker/pgsql/init/:/docker-entrypoint-initdb.d
-      - pgsql-data:/var/lib/pgsql
+      - ./docker/postgres/init/:/docker-entrypoint-initdb.d
+      - postgres-data:/var/lib/postgres
     ports:
       - 5432:5432
 
 volumes:
-  pgsql-data:
+  postgres-data:
     driver: local
