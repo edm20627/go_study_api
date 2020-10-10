@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/golang/Dockerfile
+    tty: true
+    environment:
+      - TZ=Japan
+    volumes:
+      - .:/go/src
+    ports:
+      - 8080:8080
+    depends_on:
+      - pgsql
+  pgsql:
+    build:
+      context: .
+      dockerfile: ./docker/pgsql/Dockerfile
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      # POSTGRES_DB: root
+    volumes:
+      - ./docker/pgsql/init/:/docker-entrypoint-initdb.d
+      - pgsql-data:/var/lib/pgsql
+    ports:
+      - 5432:5432
+
+volumes:
+  pgsql-data:
+    driver: local
