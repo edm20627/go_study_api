@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+
 	_ "github.com/lib/pq"
 )
 
@@ -23,7 +24,7 @@ func retrieve(id int) (post Post, err error) {
 
 func (post *Post) create() (err error) {
 	statement := "insert into posts (content, author) values ($1, $2) returning id"
-	stmt, err :=Db.Prepare(statement)
+	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
 	}

@@ -8,9 +8,9 @@ import (
 )
 
 type Post struct {
-	Id			int			`json:"id"`
-	Content	string	`json:"content"`
-	Author	string	`json:"author"`
+	Id      int    `json:"id"`
+	Content string `json:"content"`
+	Author  string `json:"author"`
 }
 
 func main() {
@@ -73,6 +73,7 @@ func handlePost(w http.ResponseWriter, r *http.Request) (err error) {
 
 func handlePut(w http.ResponseWriter, r *http.Request) (err error) {
 	id, err := strconv.Atoi(path.Base(r.URL.Path))
+	return
 	if err != nil {
 		return
 	}
@@ -92,7 +93,6 @@ func handlePut(w http.ResponseWriter, r *http.Request) (err error) {
 	return
 }
 
-
 func handleDelete(w http.ResponseWriter, r *http.Request) (err error) {
 	id, err := strconv.Atoi(path.Base(r.URL.Path))
 	if err != nil {
@@ -109,5 +109,3 @@ func handleDelete(w http.ResponseWriter, r *http.Request) (err error) {
 	w.WriteHeader(200)
 	return
 }
-
-
